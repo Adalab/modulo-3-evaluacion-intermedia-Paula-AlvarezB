@@ -57,9 +57,15 @@ function App() {
     setCounselor("");
     setSpeciality("");
   };
+
+  //función para filtrar el listado en función de la búsqueda de la usuaria
+
+  const filterAdalabers = data.filter((oneAdalaber) =>
+    oneAdalaber.name.toLowerCase().includes(search.toLowerCase())
+  );
   //función para pintar la lista de adalabers recorriendo el array adalabersList(data), con map
 
-  const htmlAdalaber = data.map((eachAdalaber, index) => {
+  const htmlAdalaber = filterAdalabers.map((eachAdalaber, index) => {
     return (
       <tr key={index}>
         <td>{eachAdalaber.name}</td>
