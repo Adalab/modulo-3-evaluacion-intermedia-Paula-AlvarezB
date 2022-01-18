@@ -22,7 +22,12 @@ function App() {
   }, []);
 
   //FUNCIONES MANEJADORAS
-
+  //variable de estado de la búsqueda de la usuaria
+  const [search, setSearch] = useState("");
+  //función para buscar
+  const handleSearchChange = (ev) => {
+    setSearch(ev.currentTarget.value);
+  };
   //funciones para añadir una nueva adalaber
   const handleNewName = (ev) => {
     setName(ev.currentTarget.value);
@@ -47,12 +52,20 @@ function App() {
       counselor: counselor,
       speciality: speciality,
     };
-    console.log(newAdalaber);
     setData([...data, newAdalaber]);
+    setName("");
+    setCounselor("");
+    setSpeciality("");
   };
+
+  //función para filtrar el listado en función de la búsqueda de la usuaria
+
+  const filterAdalabers = data.filter((oneAdalaber) =>
+    oneAdalaber.name.toLowerCase().includes(search.toLowerCase())
+  );
   //función para pintar la lista de adalabers recorriendo el array adalabersList(data), con map
 
-  const htmlAdalaber = data.map((eachAdalaber, index) => {
+  const htmlAdalaber = filterAdalabers.map((eachAdalaber, index) => {
     return (
       <tr key={index}>
         <td>{eachAdalaber.name}</td>
@@ -68,6 +81,15 @@ function App() {
       {/* header */}
       <header>
         <h1>Adalabers</h1>
+        <form>
+          <input
+            type="search"
+            name="search"
+            placeholder="Ej.MariCarmen"
+            onChange={handleSearchChange}
+            value={search}
+          />
+        </form>
       </header>
       {/* main */}
       <main>
